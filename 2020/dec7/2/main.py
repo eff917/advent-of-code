@@ -3,7 +3,7 @@ import pprint
 bagrules = {}
 
 next_set = set()
-with open('../input.txt', 'r') as inputfile:
+with open('../input2.txt', 'r') as inputfile:
     for line in inputfile:
         # remove newline
         line = line.strip()
@@ -101,4 +101,5 @@ sum = 0
 for value in my_bags.values():
     # print(value)
     sum += value
-print(sum)
+# we dont count the shiny gold bag itself
+print(sum - 1)
