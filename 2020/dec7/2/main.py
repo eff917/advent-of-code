@@ -26,6 +26,9 @@ with open('../input.txt', 'r') as inputfile:
             # print(f"  0 none")
             bagrules[head] = None
 
+# print parsed rules
+# pp.pprint(bagrules)
+
 my_bags = {}
 for key in bagrules:
     my_bags[key] = 0
@@ -58,12 +61,14 @@ while new_bags != {}:
     # pp.pprint(new_bags)
     for key, value in new_bags.items():
         my_bags[key] += value
-    print(f"cycle: {cycle}")
+    # print(f"cycle: {cycle}")
     cycle += 1
-    print("My bags")
-    pp.pprint(my_bags)
-    print("New bags added")
-    pp.pprint(new_bags)
+    # print("My bags")
+    # pp.pprint(my_bags)
+    # print("New bags added")
+    # pp.pprint(new_bags)
+
+# pp.pprint(my_bags)
 
 sum = 0
 for value in my_bags.values():
