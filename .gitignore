@@ -1,5 +1,6 @@
 # advent of code input file
 input.txt
+input-example.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
