@@ -7,8 +7,8 @@ with open(url, 'r') as infile:
         line = list(line.strip())
         map.append([int(x) for x in line])
 
-for line in map:
-    print(line)
+# for line in map:
+#     print(line)
 
 lowpoints = []
 lowpint_coords = []
@@ -65,8 +65,8 @@ print(f"Number of basins: {len(lowpoints)}")
 
 basins = [ [x] for x in lowpint_coords]
 
-for basinid, basin in enumerate(basins):
-    print(basin)
+for basin in basins:
+    # print(basin)
     for rowid, columnid in basin:
         # print(rowid, columnid)
         # search down
@@ -103,10 +103,10 @@ for basinid, basin in enumerate(basins):
                     break
 sizes = []
 for basinid, basin in enumerate(basins):
-    print(f"Basin {basinid}")
-    print(f"size: {len(basin)}")
+    # print(f"Basin {basinid}")
+    # print(f"size: {len(basin)}")
     sizes.append(len(basin))
     # print(basin)
 sizes = sorted(sizes)
-print(sizes[-3:])
-print(sizes[-1]*sizes[-2]* sizes[-3])
+print(f"3 largest basin sizes: {sizes[-3:]}")
+print(f"Produc of the 3 argest sies: {sizes[-1]*sizes[-2]* sizes[-3]}")
