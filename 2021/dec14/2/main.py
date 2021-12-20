@@ -1,18 +1,19 @@
 from copy import deepcopy
 from os import readlink
+from collections import Counter
 url = '2021/dec14/input.txt'
-url = '2021/dec14/input-example.txt'
+# url = '2021/dec14/input-example.txt'
 
 
 polimers = {}
-polimers[2] = {}
+polimers = {}
 with open(url, 'r') as infile:
     template = infile.readline().strip()
     infile.readline()
     rule = infile.readline().strip().split(' -> ')
     while len(rule) > 1:
         # add the first char of the source to the target
-        polimers[2][rule[0]]= rule[0][0] + rule[1]
+        polimers[rule[0]]= rule[0][0] + rule[1] + rule[0][1]
         rule = infile.readline().strip().split(' -> ')
 
 
@@ -42,31 +43,38 @@ with open(url, 'r') as infile:
 # 26 loops: example  54.910s full -
 # 27 loops: exmaple 118.695s full -
 
-# time to start memoization, and building a library of bigger chunks.
+# time to start memoization, and recursively gettint containing letters, memory usage is too high, and code is too slow
 
-import time
-t0 = time.time()
+print(polimers)
+results = {}
+def get_containing_letters(letter_pair, rounds):
+    if rounds == 1:
+        return Counter(polimers[letter_pair])
+    else:
+        if (letter_pair, rounds) in results:
+            return results[(letter_pair, rounds)]
+        else:
+            next_round = polimers[letter_pair]
+            results[(letter_pair, rounds)] = get_containing_letters(next_round[:2], rounds-1) + get_containing_letters(next_round[1:], rounds-1) - Counter(next_round[1])
+            return results[(letter_pair, rounds)]
 
-for i in range(27):
-    new_polimer = ''
-    first_char = template[0]
-    old_polimer = template[0]
-    for char in template[1:]:
-        new_polimer += polimers[2][first_char + char]
-        first_char = char
-    new_polimer += char
-    template = new_polimer
-    print(f"Finished round {i+1} in {time.time() - t0} seconds. Length: {len(template)}")
+            
 
+first_char = template[0]
+sum = Counter()
+for char in template[1:]:
+    # print(first_char + char)
+    subresult = get_containing_letters(first_char+char, 40)
+    # print(subresult)
+    sum += subresult 
+    first_char = char
 
-charset = set(template)
-print(charset)
+sum -= Counter(template[1:-1])
+print()
+print(sum)
 
-charcount = {}
-
-for char in charset:
-    print(f"{char}: {template.count(char)}")
-    charcount[char] = template.count(char)
-
-
-print(max(charcount.values()) - min(charcount.values()))
+print(f"{max(sum.values()) - min(sum.values())}")
+# Counter({'N': 2, 'C': 1})
+# Counter({'N': 1, 'B': 1, 'C': 1})
+# Counter({'B': 2, 'N': 1})
+# print(Counter("NBBBCNCCNBBNBNBBCHBHHBCHB"))
