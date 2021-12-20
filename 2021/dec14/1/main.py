@@ -1,7 +1,7 @@
 from copy import deepcopy
-from os import readlink
+from collections import Counter
 url = '2021/dec14/input.txt'
-# url = '2021/dec14/input-example.txt'
+url = '2021/dec14/input-example.txt'
 
 
 polimers = {}
@@ -24,17 +24,9 @@ for i in range(10):
             new_polimer.append(polimers[pair])
     new_polimer.append(char)
     template = deepcopy(new_polimer)
-    # print(''.join(template))
+    print(f"{''.join(template)} {Counter(''.join(template))}")
 
 
-charset = set(template)
-print(charset)
-
-charcount = {}
-
-for char in charset:
-    print(f"{char}: {template.count(char)}")
-    charcount[char] = template.count(char)
-
+charcount = Counter(template)
 
 print(max(charcount.values()) - min(charcount.values()))
