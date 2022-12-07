@@ -33,17 +33,11 @@ def explode(sn_number, original_number: str):
     # print(f"Add {sn_number[0]} to {splitnumber[0]} rightmost regular number")
     # print(f"Add {sn_number[1]} to {splitnumber[1]} leftmost regular number")
 
-    return 0, sn_number[0], sn_number[1]
+    return "X", sn_number[0], sn_number[1]
 
 def reduce(sn_number, nest_level, original_number, reduction_executed, left_carry, right_carry):
     print(f"Nest level: {nest_level}, Number: {sn_number}, Carries: {left_carry}, {right_carry}")
     if type(sn_number) is list:
-        if type(sn_number[0]) is int and left_carry > 0:
-            sn_number[0] += left_carry
-            left_carry = 0
-        if type(sn_number[1]) is int and right_carry > 0:
-            sn_number[1] += right_carry
-            right_carry = 0
         print(f"Nest level: {nest_level}, Number: {sn_number}, Left side: {sn_number[0]}, Right side: {sn_number[1]} Carries: {left_carry}, {right_carry}")
         if type(sn_number[0]) is int and type(sn_number[1]) is int and nest_level > 4 and not reduction_executed:
             sn_number, left_carry, right_carry = explode(sn_number, original_number)
@@ -82,8 +76,15 @@ print(f"Reducing: {str(original)}")
 while test_number != prev_number:
     prev_number = deepcopy(test_number)
     test_number, reduction_executed, lc, rc = reduce(test_number, 1, str(test_number), False, 0, 0)
-    print(lc, rc)
+    if "X" in str(test_number):
+        # TODO add carries to numbers left and right of X, then replace X with 0
+        left_side, right_side = str(test_number).split('X')
+        print(left_side, right_side)
+        print(f"{left_side}0{right_side}")
+        print(lc, rc)
+        test_number = ast.literal_eval(f"{left_side}0{right_side}")
     reductions += 1
+    print(test_number)
     print(f"Reductions: {reductions}, number: {test_number}")
 print(original)
 print(test_number)
