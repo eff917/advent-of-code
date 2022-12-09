@@ -64,11 +64,13 @@ def move_knot(head, tail):
     if abs(head[0] - tail[0]) > 1:
         # print("Moving left or right")
         tail0 = tail[0] + (head[0] - tail[0])//2
+        # multiply by 1.1 so round(1/2) becomes 1
         tail1 = tail[1] + round((head[1] - tail[1])/2*1.1)
     # moving up or down
     elif abs(head[1] - tail[1]) > 1:
         # print("Moving up or down")
         tail1 = tail[1] + (head[1] - tail[1])//2
+        # multiply by 1.1 so round(1/2) becomes 1
         tail0 = tail[0] + round((head[0] - tail[0])/2*1.1)
     # print(head, tail, tail0, tail1)
     return[tail0, tail1]
