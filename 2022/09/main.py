@@ -1,10 +1,12 @@
 import os
 from copy import deepcopy
+import typing
+
 infile_example = f"{os.path.dirname(os.path.realpath(__file__))}/input-example.txt"
 infile_example2 = f"{os.path.dirname(os.path.realpath(__file__))}/input-example2.txt"
 infile = f"{os.path.dirname(os.path.realpath(__file__))}/input.txt"
 
-def solution(infile):
+def solution(infile: typing.TextIO) -> None:
     moves = ''
     for line in infile:
         direction, count = line.split()
@@ -57,7 +59,7 @@ def solution(infile):
     print(f"Part1: {len(knot1_set)}")
     print(f"Part2: {len(tail_set)}")
 
-def move_knot(head, tail):
+def move_knot(head: tuple[int,int], tail: tuple[int,int]) -> tuple[int,int]:
     tail0 = tail[0]
     tail1 = tail[1]
     # moving left or right
