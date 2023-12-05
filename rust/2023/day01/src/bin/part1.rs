@@ -4,7 +4,7 @@ use std::fs::File;
 use std::str::FromStr;
 
 fn main() -> () {
-    let result = part1("src/input.txt");
+    let result = part1("src/part1/input.txt");
     println!("Result is: {}", result);
     return;
     
@@ -42,7 +42,7 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let result = part1("src/test-input.txt");
+        let result = part1("src/part1/test-input.txt");
         assert_eq!(result, 142);
     }
 }
