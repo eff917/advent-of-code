@@ -3,9 +3,14 @@ use std::io::prelude::*;
 use std::fs::File;
 use std::str::FromStr;
 
-fn main() -> io::Result<()> {
-    let file = File::open("src/input.txt")?;
-    let reader = BufReader::new(file);
+fn main() -> () {
+    part1("src/input.txt");
+    return;
+    
+}
+fn part1(input: &str) -> i32 {
+    let file = File::open(input);
+    let reader = BufReader::new(file.unwrap());
     let mut result = 0;
 
     for line in reader.lines() {
@@ -27,5 +32,15 @@ fn main() -> io::Result<()> {
         result += i32::from_str(&number).unwrap();
     }
     println!("{}", result);
-    Ok(())
+    return result;
+}
+
+mod tests {
+    use crate::part1;
+
+    #[test]
+    fn it_works() {
+        let result = part1("src/test-input.txt");
+        assert_eq!(result, 142);
+    }
 }
