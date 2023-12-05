@@ -4,7 +4,8 @@ use std::fs::File;
 use std::str::FromStr;
 
 fn main() -> () {
-    part1("src/input.txt");
+    let result = part1("src/input.txt");
+    println!("Result is: {}", result);
     return;
     
 }
@@ -35,6 +36,7 @@ fn part1(input: &str) -> i32 {
     return result;
 }
 
+#[cfg(test)]
 mod tests {
     use crate::part1;
 
