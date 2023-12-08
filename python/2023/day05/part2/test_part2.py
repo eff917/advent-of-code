@@ -1,5 +1,5 @@
 import pytest
-import part2
+from day05.part2 import part2
 import os
 
 @pytest.mark.parametrize(
@@ -62,6 +62,6 @@ def test_convert_range_to_next(ranges, id_range, expected_result):
     assert actual_result == expected_result
 
 def test_given_input():
-    infile = f"{os.path.dirname(os.path.realpath(__file__))}/part2/test-input.txt"
+    infile = f"{os.path.dirname(os.path.realpath(__file__))}/test-input.txt"
     actual_result = part2.main(infile)
     assert actual_result == 46

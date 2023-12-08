@@ -173,5 +173,5 @@ def main(infile):
     # endregion part2
 
 if __name__ == "__main__":
-    infile = f"{os.path.dirname(os.path.realpath(__file__))}/part2/input.txt"
+    infile = f"{os.path.dirname(os.path.realpath(__file__))}/input.txt"
     main(infile)
