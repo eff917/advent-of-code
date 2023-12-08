@@ -6,16 +6,14 @@ pp = pprint.PrettyPrinter(indent=2)
 def parse_input(path: str):
     races = []
     with open(path) as file:
-        times = file.readline().strip().split(":")[1].strip().split()
-        distances = file.readline().strip().split(":")[1].strip().split()
-        # for i in range(len(times)):
-        #     times.remove('')
-        # for _ in range(distances.count('')):
-        #     distances.remove('')
-        for i in range(len(times)):
-            races.append({"time": int(times[i]), "distance": int(distances[i])})
+        time = file.readline().strip().split(":")[1].strip().split()
+        distance = file.readline().strip().split(":")[1].strip().split()
+
+        time = int(''.join(time))
+        distance = int(''.join(distance))
+
             
-    return races
+    return (time, distance)
 
 def calculate_winning_options(time, distance):
     # we spend i ms to get speed, so we travel (time-i)ms at i mm/ms
@@ -26,15 +24,10 @@ def calculate_winning_options(time, distance):
     return wins
 
 def main(infile):
-    race_list = parse_input(infile)
-    winning_options = []
-    for race in race_list:
-        winning_options.append(calculate_winning_options(race["time"], race["distance"]))
+    time, distance = parse_input(infile)
+    winning_options = calculate_winning_options(time, distance)
 
-    summary = 1
-    for option in winning_options:
-        summary *= option
-
+    summary = winning_options
     return summary
 
 
