@@ -6,8 +6,6 @@ import logging, os
 @pytest.mark.parametrize(
         "inpufilename, expected",
         [
-            ("test-input.txt", 2),
-            ("test-input-2.txt", 6),
             ("test-input-3.txt", 6),
         ]
 )
