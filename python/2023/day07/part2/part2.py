@@ -8,7 +8,7 @@ pp = pprint.PrettyPrinter(indent=2)
 def convert_hand(hand: str) -> str:
     return (
         hand.replace("T", "a")
-        .replace("J", "b")
+        .replace("J", "1")
         .replace("Q", "c")
         .replace("K", "d")
         .replace("A", "e")
@@ -17,29 +17,33 @@ def convert_hand(hand: str) -> str:
 
 # hand types: 5, 4, 3+2, 2+2, 2, 1
 def get_type(hand: str):
+    joker_count = hand.count("J")
+    if joker_count == 5:
+        return joker_count + 1
+    hand = hand.replace("J", "")
     hand = sorted(hand)
     type = 0
     counts = [
         hand.count(hand[0]),
     ]
-    sum = counts[0]
+    sum = counts[0] 
 
-    while sum < 5:
+    while sum < 5 - joker_count:
         next = hand.count(hand[sum])
         counts.append(next)
         sum += next
 
     counts.sort(reverse=True)
-    print(counts)
-    if counts[0] > 3:
-        return counts[0] + 1
-    elif counts[0] == 3 and counts[1] == 2:
+    # print(counts)
+    if counts[0] + joker_count > 3:
+        return counts[0] + joker_count + 1
+    elif counts[0] + joker_count == 3 and counts[1] == 2:
         return 4
-    elif counts[0] == 3:
+    elif counts[0] + joker_count == 3:
         return 3
-    elif counts[0] == 2 and counts[1] == 2:
+    elif counts[0] + joker_count == 2 and counts[1] == 2:
         return 2
-    elif counts[0] == 1:
+    elif counts[0] + joker_count == 1:
         return 0
     else:
         return 1
@@ -60,8 +64,8 @@ def parse_input(path: str):
         for line in file:
             hand, bid = line.split()
             bid = int(bid)
-            hands_list[get_type(hand)][convert_hand(hand)] = bid
-    pp.pprint(hands_list)
+            hands_list[get_type(hand)][convert_hand(hand)] = {"bid": bid, "hand": hand}
+    # pp.pprint(hands_list)
     return hands_list
 
 
@@ -84,8 +88,8 @@ def main(infile):
     rank = 1
     for key, value in sorted(hands_list.items()):
         for key2, value2 in sorted(value.items()):
-            print(f"Type: {key} Hand: {key2} Bid: {value2} Rank: {rank}")
-            answer += rank * value2
+            # print(f"Type: {key} Hand: {value2["hand"]} Bid: {value2["bid"]} Rank: {rank}")
+            answer += rank * value2["bid"]
             rank += 1
 
     return answer

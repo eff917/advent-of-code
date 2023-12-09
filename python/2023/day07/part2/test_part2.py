@@ -1,5 +1,5 @@
 import pytest
-from day07.part1 import part1
+from day07.part2 import part2
 import os
 
 @pytest.mark.parametrize(
@@ -8,13 +8,16 @@ import os
             ("12345", 0),
             ("11234", 1),
             ("11223", 2),
-            ("11122", 3),
-            ("11112", 4),
-            ("11111", 5)
+            ("11123", 3),
+            ("11122", 4),
+            ("11112", 5),
+            ("11111", 6),
+            ("1J2J3", 3),
+            ("8JJJJ", 6)
         ]
 )
 def test_hand_type(hand: str, expected: int):
-    actual = part1.get_type(hand=hand)
+    actual = part2.get_type(hand=hand)
     assert actual == expected
 
 @pytest.mark.parametrize(
@@ -28,11 +31,11 @@ def test_hand_type(hand: str, expected: int):
         ]
 )
 def test_card_strength(card1: str, card2: str, expected: int):
-    actual = part1.compare_cards(card1, card2)
+    actual = part2.compare_cards(card1, card2)
     assert actual == expected
 
 def test_given_input():
     infile = f"{os.path.dirname(os.path.realpath(__file__))}/test-input.txt"
-    actual_result = part1.main(infile)
-    assert actual_result == 6440
+    actual_result = part2.main(infile)
+    assert actual_result == 5905
 
