@@ -2,7 +2,6 @@ import pytest
 from day09.part2 import part2
 import os
 
-
 @pytest.mark.parametrize(
     "inpufilename, expected",
     [

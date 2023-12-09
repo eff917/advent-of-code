@@ -2,12 +2,10 @@ import pytest
 from day09.part1 import part1
 import os
 
-
 @pytest.mark.parametrize(
         "inpufilename, expected",
         [
-            ("test-input.txt", 2),
-            ("test-input-2.txt", 6),
+            ("test-input.txt", 114),
         ]
 )
 def test_given_input(inpufilename, expected):
