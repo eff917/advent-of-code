@@ -1,6 +1,6 @@
 import pytest
 from day08.part2 import part2
-import os
+import logging, os
 
 
 @pytest.mark.parametrize(
@@ -8,6 +8,7 @@ import os
         [
             ("test-input.txt", 2),
             ("test-input-2.txt", 6),
+            ("test-input-3.txt", 6),
         ]
 )
 def test_given_input(inpufilename, expected):
