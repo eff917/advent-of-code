@@ -3,6 +3,7 @@ from day09.part1 import part1
 import os
 
 
+@pytest.mark.day09
 @pytest.mark.parametrize(
     "inpufilename, expected",
     [
@@ -15,6 +16,7 @@ def test_given_input(inpufilename, expected):
     assert actual_result == expected
 
 
+@pytest.mark.day09
 @pytest.mark.parametrize(
     "bottom_line, top_line, expected",
     [([0, 0, 0, 0, 0], [3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3])],
@@ -23,7 +25,7 @@ def test_extend_top_line(bottom_line, top_line, expected):
     actual = part1.extend_top_line(bottom_line, top_line)
     assert actual == expected
 
-
+@pytest.mark.day09
 @pytest.mark.parametrize(
     "submap, expected",
     [

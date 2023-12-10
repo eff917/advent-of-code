@@ -1,46 +1,28 @@
 import pytest
-from day09.part1 import part1
+from day10.part1 import part1
 import os
 
-
+@pytest.mark.day10
 @pytest.mark.parametrize(
     "inpufilename, expected",
     [
-        ("test-input.txt", 114),
+        ("test-input.txt", 4),
+        ("test-input-2.txt", 8),
     ],
 )
-def test_given_input(inpufilename, expected):
+def test_main_answer(inpufilename, expected):
     infile = f"{os.path.dirname(os.path.realpath(__file__))}/{inpufilename}"
     actual_result = part1.main(infile)
     assert actual_result == expected
 
-
+@pytest.mark.day10
 @pytest.mark.parametrize(
-    "bottom_line, top_line, expected",
-    [([0, 0, 0, 0, 0], [3, 3, 3, 3, 3], [3, 3, 3, 3, 3, 3])],
+        "map, expected",
+        [
+            (['7-F7-', '.FJ|7', 'SJLL7', '|F--J', 'LJ.LJ'], (2, 0)),
+            (['-L|F7', '7S-7|', 'L|7||', '-L-J|', 'L|-JF'], (1, 1))
+        ]
 )
-def test_extend_top_line(bottom_line, top_line, expected):
-    actual = part1.extend_top_line(bottom_line, top_line)
-    assert actual == expected
-
-
-@pytest.mark.parametrize(
-    "submap, expected",
-    [
-        ([[0, 3, 6, 9, 12, 15], [3, 3, 3, 3, 3], [0, 0, 0, 0]], 18),
-        ([[1, 3, 6, 10, 15, 21], [2, 3, 4, 5, 6], [1, 1, 1, 1], [0, 0, 0]], 28),
-        (
-            [
-                [10, 13, 16, 21, 30, 45],
-                [3, 3, 5, 9, 15],
-                [0, 2, 4, 6],
-                [2, 2, 2],
-                [0, 0],
-            ],
-            68,
-        ),
-    ],
-)
-def test_get_submap_extension_value(submap, expected):
-    actual = part1.get_submap_extension_value(submap)
+def test_start_coord(map, expected):
+    actual = part1.get_starting_position(map=map)
     assert actual == expected

@@ -1,5 +1,5 @@
 import pytest
-from day09.part2 import part2
+from day10.part2 import part2
 import os
 
 
