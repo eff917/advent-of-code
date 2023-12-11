@@ -7,18 +7,19 @@ import os
 @pytest.mark.parametrize(
     "inpufilename, expected",
     [
-        ("test-input.txt", 4),
-        ("test-input-2.txt", 8),
+        # ("test-input.txt", 4),
+        ("test-input-3.txt", 4), # this fails
+        ("test-input-4.txt", 4), # this passes
     ],
 )
 def test_main_answer(inpufilename, expected):
-    infile = f"{os.path.dirname(os.path.realpath(__file__))}/{inpufilename}"
-    actual_result = part.main(infile)
+    actual_result = part.main(inpufilename)
     assert actual_result == expected
 
 test_map_1 = ['-L|F7', '7S-7|', 'L|7||', '-L-J|', 'L|-JF']
 test_map_2 = ['7-F7-', '.FJ|7', 'SJLL7', '|F--J', 'LJ.LJ']
-
+test_loop_1 = [(2, 2), (3, 2), (4, 2), (4, 3), (4, 4), (3, 4), (2, 4), (2, 3), (2, 2)]
+test_loop_2 = [(3, 1), (4, 1), (5, 1), (5, 2), (4, 2), (4, 3), (4, 4), (4, 5), (3, 5), (3, 4), (2, 4), (1, 4), (1, 3), (2, 3), (2, 2), (3, 2), (3, 1)]
 
 @pytest.mark.day10
 @pytest.mark.parametrize(
@@ -110,4 +111,25 @@ def test_west(map, node, expected):
 )
 def test_get_next_node(current_symbol, current_node, prev_node, expected):
     actual = part.get_next_node(current_symbol=current_symbol, current_node=current_node, prev_node=prev_node)
+    assert actual == expected
+
+@pytest.mark.day10
+@pytest.mark.parametrize(
+    "map, loop, line, expected",
+    [
+        (part.parse_input("test-input.txt"), part.get_loop(part.parse_input("test-input.txt")), 3, 1),
+        (part.parse_input("test-input-3.txt"), part.get_loop(part.parse_input("test-input-3.txt")), 1, 0),
+        (part.parse_input("test-input-3.txt"), part.get_loop(part.parse_input("test-input-3.txt")), 2, 0),
+        (part.parse_input("test-input-3.txt"), part.get_loop(part.parse_input("test-input-3.txt")), 3, 0),
+        (part.parse_input("test-input-3.txt"), part.get_loop(part.parse_input("test-input-3.txt")), 4, 0),
+        (part.parse_input("test-input-3.txt"), part.get_loop(part.parse_input("test-input-3.txt")), 5, 0),
+        (part.parse_input("test-input-3.txt"), part.get_loop(part.parse_input("test-input-3.txt")), 6, 0),
+        (part.parse_input("test-input-3.txt"), part.get_loop(part.parse_input("test-input-3.txt")), 7, 4),
+        (part.parse_input("test-input-3.txt"), part.get_loop(part.parse_input("test-input-3.txt")), 8, 0),
+        (part.parse_input("test-input-3.txt"), part.get_loop(part.parse_input("test-input-3.txt")), 9, 0),
+        
+    ]
+)
+def test_inside_count(map, loop, line, expected):
+    actual = part.line_get_inside_count(map=map, loop=loop, line=line)
     assert actual == expected
