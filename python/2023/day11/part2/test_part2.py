@@ -15,7 +15,7 @@ import os
 )
 def test_main_answer(inpufilename, expansion, expected):
     infile = inpufilename
-    actual_result = part.main(infile)
+    actual_result = part.main(infile, expansion)
     assert actual_result == expected
 
 
@@ -53,5 +53,36 @@ def test_convert_map(inputfilename, expected):
 
 
 # expand needs a multiplier
-def test_expand_galaxy_list():
-    pass
+@pytest.mark.day11
+@pytest.mark.parametrize(
+    "inputfilename, inputs, expected",
+    [
+        (
+            "test-input.txt",
+            (
+                2,  # expansion value
+                [3, 7],  # empty_rows
+                [2, 5, 8],  # empty_columns
+            ),
+            {
+                1: (0, 4),
+                2: (1, 9),
+                3: (2, 0),
+                4: (5, 8),
+                5: (6, 1),
+                6: (7, 12),
+                7: (10, 9),
+                8: (11, 0),
+                9: (11, 5),
+            },
+        )
+    ],
+)
+def test_expand_galaxy_list(inputfilename, inputs, expected):
+    map = part.parse_input(inputfilename)
+    expansion_value, expected_rows, expected_columns = inputs
+    galaxy_list, rows_list, columns_list = part.convert_map(map)
+    actual_galaxy_list = part.expand_galaxy(
+        galaxy_list, expansion_value, columns_list, rows_list
+    )
+    assert actual_galaxy_list == expected

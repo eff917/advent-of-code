@@ -4,10 +4,22 @@ import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
 
-def expand_galaxy(galaxy_list, expansion_value):
-    for key, y, x in galaxy_list.items():
-        pass
-    return galaxy_list
+def expand_galaxy(galaxy_list, expansion_value, columns_list, rows_list):
+    new_galaxy_list = {}
+    for key, value in galaxy_list.items():
+        y, x = value
+        column_multiplier = 0
+        row_multiplier = 0
+        for column in columns_list:
+            if x > column:
+                column_multiplier += 1
+        for row in rows_list:
+            if y > row:
+                row_multiplier += 1
+        new_y = y + row_multiplier * (expansion_value - 1)
+        new_x = x + column_multiplier * (expansion_value - 1)
+        new_galaxy_list[key] = (new_y, new_x)
+    return new_galaxy_list
 
 
 def convert_map(
@@ -50,13 +62,13 @@ def parse_input(filename: str):
     return map
 
 
-def main(infile):
+def main(infile, expansion_value):
     answer = 0
     map = parse_input(infile)
     print("Map parsed")
-    galaxy_list = convert_map(map)
+    galaxy_list, rows, columns = convert_map(map)
     print("Conversion complete")
-    map = expand_galaxy(galaxy_list)
+    galaxy_list = expand_galaxy(galaxy_list, expansion_value, columns, rows)
     print("Map expanded")
 
     # pp.pprint(map)
@@ -71,5 +83,5 @@ def main(infile):
 
 if __name__ == "__main__":
     infile = "input.txt"
-    answer = main(infile)
+    answer = main(infile, 1000000)
     print(answer)
