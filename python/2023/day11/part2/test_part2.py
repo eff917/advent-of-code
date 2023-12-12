@@ -18,16 +18,40 @@ def test_main_answer(inpufilename, expansion, expected):
     actual_result = part.main(infile)
     assert actual_result == expected
 
-def get_empty_rows():
-    pass
 
-def get_empty_columns():
-    pass
+@pytest.mark.day11
+@pytest.mark.parametrize(
+    "inputfilename, expected",
+    [
+        (
+            "test-input.txt",
+            (
+                {
+                    1: (0, 3),
+                    2: (1, 7),
+                    3: (2, 0),
+                    4: (4, 6),
+                    5: (5, 1),
+                    6: (6, 9),
+                    7: (8, 7),
+                    8: (9, 0),
+                    9: (9, 4),
+                },  # galaxy list
+                [3, 7],  # empty_rows
+                [2, 5, 8],  # empty_columns
+            ),
+        )
+    ],
+)
+def test_convert_map(inputfilename, expected):
+    map = part.parse_input(inputfilename)
+    actual_list, actual_rows, actual_columns = part.convert_map(map)
+    expected_list, expected_rows, expected_columns = expected
+    assert actual_list == expected_list
+    assert actual_rows == expected_rows
+    assert actual_columns == expected_columns
 
-def test_get_galaxy_list():
-    pass
 
 # expand needs a multiplier
 def test_expand_galaxy_list():
     pass
-
