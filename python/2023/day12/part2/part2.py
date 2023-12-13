@@ -3,7 +3,6 @@ import pprint
 
 pp = pprint.PrettyPrinter(indent=2)
 
-
 def parse_input(filename: str):
     path = f"{os.path.dirname(os.path.realpath(__file__))}/{filename}"
     map = []
@@ -39,19 +38,43 @@ def get_line_permutations(line, damages):
         else:
             return 0
     else:
+        # try to cut off invalid branches
+        # DONE
+        # number of # > sum damages ()
+        # #+? < sum damages (can't convert enough ? to #)
+        # TODO
+        # cut out matching parts? eg. .###. ,3,
+        # try matching question marks at start, and reduce them eg .?###. and larged damaged block is 3
+
         line1 = f"{line[:index]}.{line[index+1:]}"
-        permutations += get_line_permutations(line1, damages)
+        if line1.count("#") <= sum(damages) and line1.count("#") + line1.count("?") >= sum(damages) and "#"*(max(damages)+1) not in line1:
+            permutations += get_line_permutations(line1, damages)
         line2 = f"{line[:index]}#{line[index+1:]}"
-        permutations += get_line_permutations(line2, damages)
+        if line2.count("#") <= sum(damages) and line2.count("#") + line2.count("?") >= sum(damages) and "#"*(max(damages)+1) not in line2:
+            permutations += get_line_permutations(line2, damages)
         return permutations
 
+def unfold(map, damage_groups):
+    new_map = []
+    new_damage_groups = []
+    for line in map:
+        new_line = line
+        for i in range(4):
+            new_line += f"?{line}"
+        new_map.append(new_line)
+    for line in damage_groups:
+        new_line = line*5
+        new_damage_groups.append(new_line)
+    return (new_map, new_damage_groups)
 
 
 def main(infile):
     answer = 0
     map, damage_groups = parse_input(infile)
+    map, damage_groups = unfold(map=map, damage_groups=damage_groups)
     for i in range(len(map)):
         answer += get_line_permutations(map[i], damage_groups[i])
+        print(f"Line {i} out of {len(map)} done.")
     return answer
 
 

@@ -8,7 +8,7 @@ import os
 @pytest.mark.parametrize(
     "inpufilename, expected",
     [
-        ("test-input.txt", 21),
+        ("test-input.txt", 525152),
     ],
 )
 def test_main_answer(inpufilename, expected):
@@ -48,4 +48,50 @@ def test_get_damages(input, expected):
 )
 def test_line_permutations(line, damages, expected):
     actual = part.get_line_permutations(line, damages)
+    assert actual == expected
+
+
+@pytest.mark.day12
+@pytest.mark.parametrize(
+    "map, damage_groups, expected",
+    [
+        (
+            [
+                ".#",
+            ],
+            [[1]],
+            ([".#?.#?.#?.#?.#"], [[1, 1, 1, 1, 1]]),
+        ),
+        (
+            ["???.###"],
+            [[1, 1, 3]],
+            (
+                ["???.###????.###????.###????.###????.###"],
+                [[1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3]],
+            ),
+        ),
+    ],
+)
+def test_unfold(map, damage_groups, expected):
+    actual_map, actual_damage_groups = part.unfold(map, damage_groups)
+    assert actual_map == expected[0]
+    assert actual_damage_groups == expected[1]
+
+@pytest.mark.day12
+@pytest.mark.parametrize(
+    "line, damages, expected",
+    [
+        ("???.###", [1, 1, 3], 1),
+        ("????.#...#...", [4, 1, 1], 16),
+        ("????.######..#####.", [1, 6, 5], 2500),
+        (".??..??...?##.", [1, 1, 3], 16384),
+        ("?#?#?#?#?#?#?#?", [1, 3, 1, 6], 1),
+        ("?###????????", [3, 2, 1], 506250),
+    ],
+)
+def test_unfolded_line_permutations(line, damages, expected):
+    new_line = line
+    for _ in range(4):
+        new_line += f"?{line}"
+    actual = part.get_line_permutations(new_line, damages*5)
     assert actual == expected
